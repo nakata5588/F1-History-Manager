@@ -4,6 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>F1 History Manager</title>
+    <style>
+      :root {
+        --glass: rgba(255,255,255,0.75);
+        --glass-border: rgba(0,0,0,0.08);
+      }
+      /* Background com gradiente + “pista” discreta */
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(1200px 600px at 100% 0%, rgba(255,255,255,0.12), transparent 60%),
+          radial-gradient(800px 400px at 0% 100%, rgba(255,255,255,0.10), transparent 60%),
+          linear-gradient(135deg, #0d0f13 0%, #12171f 50%, #19202b 100%);
+        color: #0b0e13;
+      }
+      /* “vidro” para cartões */
+      .glass {
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(6px);
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      }
+      a, button { cursor: pointer; }
+      button.primary {
+        background: linear-gradient(90deg, #e10600, #ff6b00);
+        border: none; color: #fff; font-weight: 700;
+      }
+      button.ghost {
+        background: transparent; border:1px solid #cfd5df; color:#111;
+      }
+      button, .btn {
+        padding: 10px 14px; border-radius: 10px; font-size: 14px;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
