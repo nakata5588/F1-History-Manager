@@ -1,52 +1,35 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { HashRouter, Routes, Route, Link, useNavigate } from 'react-router-dom'
+import { HashRouter, Routes, Route, Link } from 'react-router-dom'
+import useSave from './hooks/useSave.js'
 import db from './data/f1_manager_1980.json'
 import { simulateSession, msToTime } from './utils/simulation.js'
 
-/** “Estado” do jogo guardado de forma simples no localStorage **/
-function useSave() {
-  const [save, setSave_] = useState(() => {
-    const raw = localStorage.getItem('f1_save')
-    return raw ? JSON.parse(raw) : null
-  })
-  function setSave(v) {
-    setSave_(v)
-    localStorage.setItem('f1_save', JSON.stringify(v))
-  }
-  function clear() {
-    setSave_(null)
-    localStorage.removeItem('f1_save')
-  }
-  return { save, setSave, clear }
-}
+import Team from './pages/Team.jsx'
+import Staff from './pages/Staff.jsx'
+import Calendar from './pages/Calendar.jsx'
+import Sponsors from './pages/Sponsors.jsx'
+import Finances from './pages/Finances.jsx'
 
 function Home() {
   return (
     <>
       <h2>🏠 Home</h2>
-      <p>Escolhe uma opção:</p>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/new">🆕 Novo Jogo</Link></li>
-        <li><Link to="/practice">🛠️ Treinos</Link></li>
-      </ul>
+      <p>Escolhe uma opção no menu.</p>
     </>
   )
 }
 
 function NewGame() {
   const { setSave } = useSave()
-  const navigate = useNavigate()
   function start() {
-    setSave(db)               // usa o JSON incluído
+    setSave(db)
     alert('Carreira 1980 iniciada!')
-    navigate('/practice')
+    location.hash = '#/team'
   }
   return (
     <>
       <h2>🆕 Novo Jogo</h2>
-      <p>Base de dados 1980 incluída.</p>
       <button onClick={start}>Começar 1980</button>
     </>
   )
@@ -54,10 +37,9 @@ function NewGame() {
 
 function Practice() {
   const { save } = useSave()
-  if (!save) return <p>Cria um jogo em <Link to="/new">Novo Jogo</Link> primeiro.</p>
+  if (!save) return <p>Cria um jogo em <a href="#/new">Novo Jogo</a> primeiro.</p>
   const track = save.tracks[0]
   const results = simulateSession(save.drivers, save.teams, track, { seed: 1980 })
-
   return (
     <>
       <h2>🛠️ Treinos — {track.name}</h2>
@@ -76,12 +58,17 @@ function Practice() {
 
 function Layout() {
   return (
-    <div style={{display:'grid', gridTemplateColumns:'220px 1fr', height:'100vh', fontFamily:'system-ui, sans-serif'}}>
+    <div style={{display:'grid', gridTemplateColumns:'240px 1fr', height:'100vh', fontFamily:'system-ui, sans-serif'}}>
       <aside style={{borderRight:'1px solid #ddd', padding:16}}>
-        <h1 style={{fontSize:18}}>F1 History Manager</h1>
-        <nav style={{display:'grid', gap:8}}>
+        <h1 style={{fontSize:18, margin:0}}>F1 History Manager</h1>
+        <nav style={{display:'grid', gap:8, marginTop:12}}>
           <Link to="/">🏠 Home</Link>
           <Link to="/new">🆕 Novo Jogo</Link>
+          <Link to="/team">👥 Equipa</Link>
+          <Link to="/staff">🧑‍🔧 Staff</Link>
+          <Link to="/calendar">🗓️ Calendário</Link>
+          <Link to="/sponsors">💼 Sponsors</Link>
+          <Link to="/finances">💰 Finanças</Link>
           <Link to="/practice">🛠️ Treinos</Link>
         </nav>
       </aside>
@@ -89,6 +76,11 @@ function Layout() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/new" element={<NewGame />} />
+          <Route path="/team" element={<Team />} />
+          <Route path="/staff" element={<Staff />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/sponsors" element={<Sponsors />} />
+          <Route path="/finances" element={<Finances />} />
           <Route path="/practice" element={<Practice />} />
         </Routes>
       </main>
