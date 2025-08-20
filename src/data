@@ -1,0 +1,19 @@
+{
+  "season": 1980,
+  "currentSession": "menu",
+  "teams": [
+    { "id": "lotus", "name": "Team Lotus", "engine": "Ford Cosworth DFV", "budget": 120, "color": "#0a3" },
+    { "id": "brabham", "name": "Brabham", "engine": "Ford Cosworth DFV", "budget": 115, "color": "#333" }
+  ],
+  "drivers": [
+    { "id": "piquet", "name": "Nelson Piquet", "teamId": "brabham", "overall": 90, "pace": 92, "racecraft": 88, "consistency": 85, "experience": 70 },
+    { "id": "andretti", "name": "Mario Andretti", "teamId": "lotus", "overall": 88, "pace": 86, "racecraft": 90, "consistency": 84, "experience": 95 }
+  ],
+  "tracks": [
+    { "id": "t_interlagos", "name": "Interlagos", "country": "Brazil", "length_km": 7.96, "laps": 40,
+      "weather_profile": { "dry": 0.7, "rain": 0.3, "hot": 0.6, "cold": 0.1 } }
+  ],
+  "gps": [
+    { "id": "GP_002", "season": 1980, "name": "Brazilian Grand Prix", "trackId": "t_interlagos" }
+  ]
+}
